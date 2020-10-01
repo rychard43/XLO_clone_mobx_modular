@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ButtomLoginSignup extends StatelessWidget {
-
   final String text;
+  final VoidCallback turnOnButtom;
+  final bool loading;
 
-
-  ButtomLoginSignup(this.text);
+  ButtomLoginSignup({this.text, this.turnOnButtom, this.loading});
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +15,17 @@ class ButtomLoginSignup extends StatelessWidget {
       margin: const EdgeInsets.only(top: 20, bottom: 12),
       child: RaisedButton(
         color: Colors.orange,
-        child: Text(text),
+        child: loading
+            ? CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(Colors.white),
+              )
+            : Text(text),
         textColor: Colors.white,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        onPressed: () {},
+        onPressed: turnOnButtom,
       ),
     );
   }

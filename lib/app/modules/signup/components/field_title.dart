@@ -1,6 +1,7 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:xlo_mobx_parse/app/modules/signup/signup_controller.dart';
 
 class FiledTitle extends StatelessWidget {
   final String title;
@@ -9,6 +10,9 @@ class FiledTitle extends StatelessWidget {
   final bool isDense;
   final TextInputType keyboardtype;
   final bool obscuretext;
+  final void Function(String) callback;
+  final String errorText;
+  final bool enableTextField;
 
   FiledTitle(
       {this.title,
@@ -16,7 +20,10 @@ class FiledTitle extends StatelessWidget {
       this.isDense,
       this.hint = "",
       this.keyboardtype,
-      this.obscuretext = false});
+      this.obscuretext = false,
+      this.callback,
+      this.errorText="",
+      this.enableTextField});
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +54,12 @@ class FiledTitle extends StatelessWidget {
           ),
         ),
         TextField(
+          enabled: enableTextField,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             hintText: "$hint",
             isDense: isDense,
+            errorText: errorText
           ),
           keyboardType: keyboardtype,
           autocorrect: false,
@@ -61,6 +70,7 @@ class FiledTitle extends StatelessWidget {
                   TelefoneInputFormatter()
                 ],
           obscureText: obscuretext,
+          onChanged: callback,
         ),
       ],
     );
