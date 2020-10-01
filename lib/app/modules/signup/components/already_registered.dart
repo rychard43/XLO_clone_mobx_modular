@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
-class SignupField extends StatelessWidget {
+class AlreadyRegistered extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Wrap(
-        alignment: WrapAlignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            "Não tem uma conta? ",
+          Text(
+            "Já tem uma conta? ",
             style: TextStyle(fontSize: 16),
           ),
           GestureDetector(
             onTap: () {
-              Modular.to.pushNamed('/signup');
+              Navigator.of(context).pop();
             },
             child: Text(
-              "Cadastre-se",
+              "Entrar",
               style: TextStyle(
                 decoration: TextDecoration.underline,
                 color: Colors.purple,

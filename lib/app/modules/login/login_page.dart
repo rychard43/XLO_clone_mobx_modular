@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:xlo_mobx_parse/app/modules/login/components/buttom_login.dart';
+import 'package:xlo_mobx_parse/app/core/widgets/buttom_login_signup/buttom_login_signup.dart';
 import 'package:xlo_mobx_parse/app/modules/login/components/email_field.dart';
 import 'package:xlo_mobx_parse/app/modules/login/components/password_field.dart';
 import 'package:xlo_mobx_parse/app/modules/login/components/signup_field.dart';
@@ -56,7 +56,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                   const SizedBox(
                     height: 4,
                   ),
-                  ButtomLogin(),
+                  ButtomLoginSignup("Entrar"),
                   Divider(color: Colors.black54,),
                   SignupField(),
                 ],
