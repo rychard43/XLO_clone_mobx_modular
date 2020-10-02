@@ -149,6 +149,21 @@ mixin _$SignupController on _SignupControllerBase, Store {
     });
   }
 
+  final _$errorAtom = Atom(name: '_SignupControllerBase.error');
+
+  @override
+  String get error {
+    _$errorAtom.reportRead();
+    return super.error;
+  }
+
+  @override
+  set error(String value) {
+    _$errorAtom.reportWrite(value, super.error, () {
+      super.error = value;
+    });
+  }
+
   final _$_signUpAsyncAction = AsyncAction('_SignupControllerBase._signUp');
 
   @override
@@ -223,6 +238,7 @@ phone: ${phone},
 passMain: ${passMain},
 passVerif: ${passVerif},
 loading: ${loading},
+error: ${error},
 namedValid: ${namedValid},
 emailValid: ${emailValid},
 phoneValid: ${phoneValid},

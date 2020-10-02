@@ -1,11 +1,17 @@
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx_parse/app/core/extensions/extensions.dart';
+import 'package:xlo_mobx_parse/app/core/models/user_model.dart';
+import 'package:xlo_mobx_parse/app/modules/signup/repositories/user_signup_repository_interface.dart';
 
 part 'signup_controller.g.dart';
 
 class SignupController = _SignupControllerBase with _$SignupController;
 
 abstract class _SignupControllerBase with Store {
+  final IUserSignupRepository userSignupRepository;
+
+  _SignupControllerBase(this.userSignupRepository);
+
   @observable
   String name;
 
@@ -111,11 +117,22 @@ abstract class _SignupControllerBase with Store {
   @observable
   bool loading = false;
 
+  @observable
+  String error;
+
   @action
   Future<void> _signUp() async {
     loading = true;
 
-    await Future.delayed(Duration(seconds: 3));
+    final user =
+        UserModel(name: name, email: email, phone: phone, password: passMain);
+
+    try {
+      final resultUser = await userSignupRepository.signup(user);
+      print(resultUser);
+    } catch (e) {
+      error = e;
+    }
 
     loading = false;
   }

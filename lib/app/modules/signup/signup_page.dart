@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:xlo_mobx_parse/app/core/widgets/buttom_login_signup/buttom_login_signup.dart';
+import 'package:xlo_mobx_parse/app/core/widgets/error_box/error_box.dart';
 import 'package:xlo_mobx_parse/app/modules/signup/components/already_registered.dart';
 import 'package:xlo_mobx_parse/app/modules/signup/components/field_title.dart';
 import 'signup_controller.dart';
@@ -40,6 +41,14 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Observer(builder: (_){
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: ErrorBox(
+                          message: controller.error,
+                        ),
+                      );
+                    }),
                     Observer(builder: (_) {
                       return FiledTitle(
                         enableTextField: !controller.loading,

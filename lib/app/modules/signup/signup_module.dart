@@ -1,13 +1,12 @@
+import 'package:dio/dio.dart';
+import 'repositories/user_signup_repository.dart';
 import 'signup_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:dio/dio.dart';
 import 'signup_page.dart';
 
 class SignupModule extends ChildModule {
   @override
-  List<Bind> get binds => [
-        Bind((i) => SignupController()),
-      ];
+  List<Bind> get binds => [];
 
   @override
   List<ModularRouter> get routers => [
