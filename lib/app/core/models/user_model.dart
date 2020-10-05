@@ -11,9 +11,9 @@ class UserModel {
   DateTime createdAt;
 
   UserModel(
-      {@required this.name,
-      @required this.email,
-      @required this.phone,
+      {this.name,
+      this.email,
+      this.phone,
       this.password,
       this.type = UserType.PARTICULAR,
       this.id,

@@ -5,6 +5,7 @@ import 'package:xlo_mobx_parse/app/core/widgets/buttom_login_signup/buttom_login
 import 'package:xlo_mobx_parse/app/modules/login/components/email_field.dart';
 import 'package:xlo_mobx_parse/app/modules/login/components/password_field.dart';
 import 'package:xlo_mobx_parse/app/modules/login/components/signup_field.dart';
+import '../../core/widgets/error_box/error_box.dart';
 import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {
@@ -52,6 +53,14 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                       ),
                     ),
                     Observer(builder: (_) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: ErrorBox(
+                          message: controller.error,
+                        ),
+                      );
+                    }),
+                    Observer(builder: (_) {
                       return EmailField(
                         enableTextField: !controller.loading,
                         errorText: controller.emailError,
@@ -71,13 +80,15 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                     const SizedBox(
                       height: 4,
                     ),
-                    Observer(builder: (_){
-                      return ButtomLoginSignup(
-                        text: "Entrar",
-                        turnOnButtom: controller.loginPressed,
-                        loading: controller.loading,
-                      );
-                    },),
+                    Observer(
+                      builder: (_) {
+                        return ButtomLoginSignup(
+                          text: "Entrar",
+                          turnOnButtom: controller.loginPressed,
+                          loading: controller.loading,
+                        );
+                      },
+                    ),
                     //lembrar de fazer a validação
                     Divider(
                       color: Colors.black54,

@@ -1,9 +1,7 @@
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:dio/native_imp.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:xlo_mobx_parse/app/core/constant/table_keys.dart';
-import 'package:xlo_mobx_parse/app/core/enum/user_type.dart';
 import 'package:xlo_mobx_parse/app/core/models/user_model.dart';
+import 'package:xlo_mobx_parse/app/core/utils/utils.dart';
 import 'package:xlo_mobx_parse/app/modules/signup/repositories/parse_errors.dart';
 import 'package:xlo_mobx_parse/app/modules/signup/repositories/user_signup_repository_interface.dart';
 
@@ -20,20 +18,10 @@ class UserSignupRepository implements IUserSignupRepository {
     final response = await parseUser.signUp();
 
     if (response.success) {
-      return mapParseToUser(response.result);
+      return Utils.mapParseToUser(response.result);
     } else {
       return Future.error(ParseErrors.getDescription(response.error.code));
     }
   }
 
-  UserModel mapParseToUser(ParseUser parseUser) {
-    return UserModel(
-      name: parseUser.get(keyUserName),
-      email: parseUser.get(keyUserEmail),
-      phone: parseUser.get(keyUserPhone),
-      id: parseUser.objectId,
-      type: UserType.values[parseUser.get(keyUserType)],
-      createdAt: parseUser.get(keyUserCreatedAt),
-    );
-  }
 }

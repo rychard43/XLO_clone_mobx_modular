@@ -1,11 +1,20 @@
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx_parse/app/core/extensions/extensions.dart';
+import 'package:xlo_mobx_parse/app/modules/login/repositories/user_login_repository_interface.dart';
+
+import '../../core/models/user_model.dart';
 
 part 'login_controller.g.dart';
 
 class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
+
+  final IUserLoginRepository userLoginRepository;
+
+
+  _LoginControllerBase(this.userLoginRepository);
+
   @observable
   String email;
 
@@ -37,12 +46,22 @@ abstract class _LoginControllerBase with Store {
   @observable
   bool loading = false;
 
+  @observable
+  String error;
+
   @action
   Future<void> _login() async {
     loading = true;
 
-    await Future.delayed(Duration(seconds: 3));
 
+    final user = UserModel(email: email,password: passMain);
+
+    try {
+      final response = await userLoginRepository.login(user);
+      print(response);
+    }catch(e){
+      error = e;
+    }
     loading = false;
   }
 }
