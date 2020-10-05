@@ -12,17 +12,21 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
 import 'package:xlo_mobx_parse/app/app_widget.dart';
 
+import 'core/widgets/custom_drawer/custom_drawer_controller.dart';
+import 'modules/home/home_controller.dart';
 import 'modules/signup/repositories/user_signup_repository_interface.dart';
 
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => BaseController(),singleton: true),
+        Bind((i) => BaseController(), singleton: true),
         Bind((i) => LoginController(i.get())),
         Bind((i) => SignupController(i.get())),
         Bind<IUserSignupRepository>((i) => UserSignupRepository()),
         Bind<IUserLoginRepository>((i) => UserLoginRepository()),
-        Bind((i) => UserManagerStore(), singleton: true),
+        Bind((i) => UserManagerStore(), singleton: true,lazy: false),
+        Bind((i) => CustomDrawerController(),lazy: false),
+        Bind((i) => HomeController()),
       ];
 
   @override

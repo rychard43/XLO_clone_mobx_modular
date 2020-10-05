@@ -8,11 +8,7 @@ import 'base_page.dart';
 
 class BaseModule extends ChildModule {
   @override
-  List<Bind> get binds => [
-        Bind((i) => CustomDrawerController()),
-        Bind((i) => BaseController()),
-        Bind((i) => HomeController()),
-      ];
+  List<Bind> get binds => [];
 
   @override
   List<ModularRouter> get routers => [
