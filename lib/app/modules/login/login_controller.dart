@@ -1,5 +1,7 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx_parse/app/core/extensions/extensions.dart';
+import 'package:xlo_mobx_parse/app/core/stores/user_manager_store.dart';
 import 'package:xlo_mobx_parse/app/modules/login/repositories/user_login_repository_interface.dart';
 
 import '../../core/models/user_model.dart';
@@ -9,9 +11,8 @@ part 'login_controller.g.dart';
 class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
-
   final IUserLoginRepository userLoginRepository;
-
+  final userManagerStore = Modular.get<UserManagerStore>();
 
   _LoginControllerBase(this.userLoginRepository);
 
@@ -53,13 +54,12 @@ abstract class _LoginControllerBase with Store {
   Future<void> _login() async {
     loading = true;
 
-
-    final user = UserModel(email: email,password: passMain);
+    final user = UserModel(email: email, password: passMain);
 
     try {
-      final response = await userLoginRepository.login(user);
-      print(response);
-    }catch(e){
+      final responseUser = await userLoginRepository.login(user);
+      userManagerStore.setUser(responseUser);
+    } catch (e) {
       error = e;
     }
     loading = false;

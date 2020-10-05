@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:xlo_mobx_parse/app/core/stores/user_manager_store.dart';
+
+import '../../../modules/base/base_controller.dart';
 
 class CustomDrawerHeader extends StatelessWidget {
+  final userManagerStore = Modular.get<UserManagerStore>();
+  final baseController = Modular.get<BaseController>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.of(context).pop();
-        Modular.to.pushNamed("/login");
+      onTap: () {
+        Modular.to.pop();
+        if (userManagerStore.isLoggedIn) {
+          baseController.setPage(4);
+        } else {
+          Modular.to.pushNamed("/login");
+        }
       },
       child: Container(
         color: Colors.purple,
@@ -29,7 +39,9 @@ class CustomDrawerHeader extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Acesse sua conta agora!",
+                    userManagerStore.isLoggedIn
+                        ? userManagerStore.user.name
+                        : "Acesse sua conta agora!",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -37,11 +49,13 @@ class CustomDrawerHeader extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Clique aqui",
+                    userManagerStore.isLoggedIn
+                        ? userManagerStore.user.email
+                        : "Clique aqui",
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ],

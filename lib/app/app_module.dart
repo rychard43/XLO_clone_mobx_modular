@@ -1,3 +1,4 @@
+import 'core/stores/user_manager_store.dart';
 import 'package:xlo_mobx_parse/app/modules/base/base_controller.dart';
 import 'package:xlo_mobx_parse/app/modules/base/base_module.dart';
 import 'package:xlo_mobx_parse/app/modules/login/login_controller.dart';
@@ -16,11 +17,12 @@ import 'modules/signup/repositories/user_signup_repository_interface.dart';
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => BaseController()),
+        Bind((i) => BaseController(),singleton: true),
         Bind((i) => LoginController(i.get())),
         Bind((i) => SignupController(i.get())),
         Bind<IUserSignupRepository>((i) => UserSignupRepository()),
         Bind<IUserLoginRepository>((i) => UserLoginRepository()),
+        Bind((i) => UserManagerStore(), singleton: true),
       ];
 
   @override

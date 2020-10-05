@@ -1,6 +1,8 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx_parse/app/core/extensions/extensions.dart';
 import 'package:xlo_mobx_parse/app/core/models/user_model.dart';
+import 'package:xlo_mobx_parse/app/core/stores/user_manager_store.dart';
 import 'package:xlo_mobx_parse/app/modules/signup/repositories/user_signup_repository_interface.dart';
 
 part 'signup_controller.g.dart';
@@ -9,6 +11,7 @@ class SignupController = _SignupControllerBase with _$SignupController;
 
 abstract class _SignupControllerBase with Store {
   final IUserSignupRepository userSignupRepository;
+  final userManagerStore = Modular.get<UserManagerStore>();
 
   _SignupControllerBase(this.userSignupRepository);
 
@@ -129,7 +132,7 @@ abstract class _SignupControllerBase with Store {
 
     try {
       final resultUser = await userSignupRepository.signup(user);
-      print(resultUser);
+      userManagerStore.setUser(resultUser);
     } catch (e) {
       error = e;
     }
