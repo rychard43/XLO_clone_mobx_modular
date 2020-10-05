@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 class PasswordField extends StatelessWidget {
+  final void Function(String) callback;
+  final String errorText;
+  final bool enableTextField;
+
+  PasswordField({this.callback, this.errorText, this.enableTextField});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,9 +38,14 @@ class PasswordField extends StatelessWidget {
           ),
         ),
         TextField(
+          enabled: enableTextField,
           decoration: InputDecoration(
-              border: const OutlineInputBorder(), isDense: true),
+            border: const OutlineInputBorder(),
+            isDense: true,
+            errorText: errorText,
+          ),
           obscureText: true,
+          onChanged: callback,
         ),
       ],
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:xlo_mobx_parse/app/core/widgets/buttom_login_signup/buttom_login_signup.dart';
 import 'package:xlo_mobx_parse/app/modules/login/components/email_field.dart';
@@ -50,16 +51,37 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                         color: Colors.grey[900],
                       ),
                     ),
-                    EmailField(),
+                    Observer(builder: (_) {
+                      return EmailField(
+                        enableTextField: !controller.loading,
+                        errorText: controller.emailError,
+                        callback: controller.setEmail,
+                      );
+                    }),
                     SizedBox(
                       height: 16,
                     ),
-                    PasswordField(),
+                    Observer(builder: (_) {
+                      return PasswordField(
+                        enableTextField: !controller.loading,
+                        errorText: controller.passmainError,
+                        callback: controller.setPassmain,
+                      );
+                    }),
                     const SizedBox(
                       height: 4,
                     ),
-                    ButtomLoginSignup(text: "Entrar",turnOnButtom: (){}, loading: false,),//lembrar de fazer a validação
-                    Divider(color: Colors.black54,),
+                    Observer(builder: (_){
+                      return ButtomLoginSignup(
+                        text: "Entrar",
+                        turnOnButtom: controller.loginPressed,
+                        loading: controller.loading,
+                      );
+                    },),
+                    //lembrar de fazer a validação
+                    Divider(
+                      color: Colors.black54,
+                    ),
                     SignupField(),
                   ],
                 ),
